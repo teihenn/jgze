@@ -30,8 +30,6 @@ cargo install --path .
 
 ## Usage
 
-Basic usage:
-
 ```bash
 # Edit with default editor (vim)
 jgze input.json.gz
