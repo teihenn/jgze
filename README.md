@@ -2,6 +2,8 @@
 
 A command-line tool for editing gzipped JSON files directly without manual decompression/compression steps.
 
+[crates.io/crates/jgze](https://crates.io/crates/jgze)
+
 ## Features
 
 - Edit `.json.gz` files directly using your preferred text editor
