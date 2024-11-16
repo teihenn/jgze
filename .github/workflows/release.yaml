@@ -1,0 +1,48 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v[0-9]+.*'
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: taiki-e/create-gh-release-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  upload-assets:
+    needs: create-release
+    strategy:
+      matrix:
+        include:
+          # Linux (x86_64)
+          - target: x86_64-unknown-linux-gnu
+            os: ubuntu-latest
+            name: jgze-x86_64-linux.tar.gz
+
+          # macOS (Intel)
+          - target: x86_64-apple-darwin
+            os: macos-latest
+            name: jgze-x86_64-darwin.tar.gz
+
+          # macOS (Apple Silicon)
+          - target: aarch64-apple-darwin
+            os: macos-latest
+            name: jgze-aarch64-darwin.tar.gz
+
+          # Windows (x86_64)
+          - target: x86_64-pc-windows-msvc
+            os: windows-latest
+            name: jgze-x86_64-windows.zip
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: taiki-e/upload-rust-binary-action@v1
+        with:
+          target: ${{ matrix.target }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          archive: ${{ matrix.name }}
