@@ -1,0 +1,13 @@
+{
+  "name": "test",
+  "age": 30,
+  "items": [
+    "book",
+    "pen",
+    "notebook"
+  ],
+  "address": {
+    "city": "Tokyo",
+    "country": "Japan"
+  }
+}
