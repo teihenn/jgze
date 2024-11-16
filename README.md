@@ -14,7 +14,19 @@ A command-line tool for editing gzipped JSON files directly without manual decom
 
 ## Installation
 
-TODD: write this section
+Using cargo:
+
+```bash
+cargo install jgze
+```
+
+From source:
+
+```bash
+git clone https://github.com/teihenn/jgze
+cd jgze
+cargo install --path .
+```
 
 ## Usage
 
