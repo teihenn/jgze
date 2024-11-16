@@ -112,10 +112,7 @@ git push origin main v1.1.0
 This will trigger the GitHub Actions workflow that:
 
 - Creates a new GitHub release
-- Builds binaries for:
-  - Linux (x86_64-unknown-linux-gnu)
-  - macOS (x86_64-apple-darwin)
-  - Windows (x86_64-pc-windows-msvc)
+- Builds binaries
 - Uploads the binaries to the release page
 
 ### Supported Platforms
