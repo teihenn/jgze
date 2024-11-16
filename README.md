@@ -70,3 +70,67 @@ The tool includes error handling for common scenarios:
 - Compression/decompression errors
 
 Error messages are descriptive and include the specific failure point.
+
+## For Developers
+
+### Release Process
+
+1. Update version in `Cargo.toml`:
+
+```toml
+[package]
+name = "jgze"
+version = "1.1.0"  # Update this version
+```
+
+2. Update `CHANGELOG.md`:
+
+```markdown
+# Changelog
+
+## [0.1.1] - 2024-03-XX
+- Add your changes here
+
+## [1.0.0] - 2024-11-17
+```
+
+3. Commit changes:
+
+```bash
+git add Cargo.toml CHANGELOG.md
+git commit -m "Prepare for v1.1.0 release"
+```
+
+4. Create and push a new tag:
+
+```bash
+git tag v1.1.0
+git push origin main v1.1.0
+```
+
+This will trigger the GitHub Actions workflow that:
+
+- Creates a new GitHub release
+- Builds binaries for:
+  - Linux (x86_64-unknown-linux-gnu)
+  - macOS (x86_64-apple-darwin)
+  - Windows (x86_64-pc-windows-msvc)
+- Uploads the binaries to the release page
+
+### Supported Platforms
+
+The automated builds create binaries for:
+
+| Platform | Architecture | Target Triple | File Name |
+|----------|-------------|---------------|-----------|
+| Linux | x86_64 | x86_64-unknown-linux-gnu | jgze-x86_64-linux.tar.gz |
+| macOS | x86_64 | x86_64-apple-darwin | jgze-x86_64-darwin.tar.gz |
+| macOS | aarch64 | aarch64-apple-darwin | jgze-aarch64-darwin.tar.gz |
+| Windows | x86_64 | x86_64-pc-windows-msvc | jgze-x86_64-windows.zip |
+
+5. Publish to crates.io:
+
+```bash
+cargo login
+cargo publish
+```
