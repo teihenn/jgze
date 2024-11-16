@@ -1,6 +1,7 @@
 # jgze
 
-A command-line tool for editing gzipped JSON files directly without manual decompression/compression steps.
+A command-line tool for editing gzipped JSON files
+directly without manual decompression/compression steps.
 
 [crates.io/crates/jgze](https://crates.io/crates/jgze)
 
@@ -88,7 +89,7 @@ version = "1.1.0"  # Update this version
 ```markdown
 # Changelog
 
-## [0.1.1] - 2024-03-XX
+## [1.1.0] - 2024-03-XX
 - Add your changes here
 
 ## [1.0.0] - 2024-11-17
