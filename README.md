@@ -89,7 +89,7 @@ version = "1.1.0"  # Update this version
 ```markdown
 # Changelog
 
-## [1.1.0] - 2024-03-XX
+## [1.1.0] - 2024-11-26
 - Add your changes here
 
 ## [1.0.0] - 2024-11-17
