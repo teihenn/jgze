@@ -4,6 +4,12 @@
 
 ## [Released]
 
+### [1.1.1] - 2024-11-17
+
+(Document-only update, but patch version bumped for release)
+
+- Moved development-related documentation from README.md to DEVELOP.md.
+
 ### [1.1.0] - 2024-11-17
 
 #### Feature
