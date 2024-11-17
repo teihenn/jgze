@@ -13,6 +13,62 @@ directly without manual decompression/compression steps.
 - Validates JSON syntax after editing
 - Supports custom editor selection (defaults to vim)
 
+## Supported JSON Formats
+
+The tool supports three JSON formats:
+
+1. Compact JSON (single line)
+
+```json
+{"name":"John","age":30,"city":"Tokyo"}
+```
+
+2. Pretty-printed JSON
+
+```json
+{
+  "name": "John",
+  "age": 30,
+  "city": "Tokyo"
+}
+```
+
+3. JSON Lines (JSONL)
+
+```json
+{"name":"John","age":30}
+{"name":"Alice","age":25}
+{"name":"Bob","age":35}
+```
+
+For better readability, all formats are automatically converted to
+pretty-printed format when opened in the editor.
+After saving, the file is converted back to its original format before compression.
+
+For example, if you open a compact JSON file:
+
+1. Original: `{"name":"John","age":30,"city":"Tokyo"}`
+2. While editing:
+
+```json
+{
+"name": "John",
+"age": 30,
+"city": "Tokyo"
+}
+```
+
+Suppose you edited this as follows:
+
+```json
+{
+"name": "John",
+"age": 30
+}
+```
+
+3. After saving: `{"name":"John","age":30}`
+
 ## Installation
 
 Using cargo:
@@ -43,12 +99,18 @@ jgze --editor nano input.json.gz
 ## How it works
 
 1. Decompresses the input `.json.gz` file
-2. If the JSON is in compact format, formats it for better readability
+2. Detects the JSON format and processes accordingly:
+   - Compact JSON: Formats for better readability
+   - JSONL: Formats each line individually
+   - Pretty-printed JSON: Keeps as is
 3. Opens the formatted JSON in the specified editor
 4. After editing and saving:
    - Validates the JSON syntax
-   - If the original was in compact format, converts back to compact
-   - Compresses and saves back to the original file
+   - Converts based on original format:
+     - For compact JSON: Compresses to single line
+     - For JSONL: Compresses each object to single line
+     - For pretty-printed JSON: Preserves formatting
+   - Compresses with gzip and saves back to the original file
 
 ## Examples
 
@@ -76,37 +138,61 @@ Error messages are descriptive and include the specific failure point.
 
 ### Release Process
 
-1. Update version in `Cargo.toml`:
+1. Update version in `Cargo.toml` on develop branch:
 
 ```toml
 [package]
 name = "jgze"
-version = "1.1.0"  # Update this version
+version = "1.1.0"  # Update this version(ex: 1.0.0 -> 1.1.0)
 ```
 
-2. Update `CHANGELOG.md`:
+2. Update `CHANGELOG.md` on develop branch:
+
+- Move changes from "Unreleased" to "Released"
+- Add release date
 
 ```markdown
 # Changelog
 
-## [1.1.0] - 2024-11-26
-- Add your changes here
+## [Unreleased]
 
-## [1.0.0] - 2024-11-17
+## [Released]
+
+### [1.1.0] - 2024-11-26
+
+#### Feature
+- xxx
+
+### [1.0.0] - 2024-11-17
 ```
 
-3. Commit changes:
+3. Update cargo.lock
 
 ```bash
-git add Cargo.toml CHANGELOG.md
-git commit -m "Prepare for v1.1.0 release"
+cargo build
 ```
 
-4. Create and push a new tag:
+4. Commit and push changes to develop branch:
+
+```bash
+git add .
+git commit -m "Prepare for v1.1.0 release"
+git push origin develop
+```
+
+5. Merge develop branch into release branch:
+
+```bash
+git checkout release
+git merge --no-ff develop
+git push origin release
+```
+
+6. Create and push a new tag on release branch:
 
 ```bash
 git tag v1.1.0
-git push origin main v1.1.0
+git push origin v1.1.0
 ```
 
 This will trigger the GitHub Actions workflow that:
@@ -115,7 +201,7 @@ This will trigger the GitHub Actions workflow that:
 - Builds binaries
 - Uploads the binaries to the release page
 
-### Supported Platforms
+#### Supported Platforms
 
 The automated builds create binaries for:
 
@@ -126,9 +212,17 @@ The automated builds create binaries for:
 | macOS | aarch64 | aarch64-apple-darwin | jgze-aarch64-darwin.tar.gz |
 | Windows | x86_64 | x86_64-pc-windows-msvc | jgze-x86_64-windows.zip |
 
-5. Publish to crates.io:
+7. Publish to crates.io:
 
 ```bash
 cargo login
 cargo publish
+```
+
+8. Merge release branch into main branch:
+
+```bash
+git checkout main
+git merge --no-ff release
+git push origin main
 ```

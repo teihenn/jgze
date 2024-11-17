@@ -1,2 +1,3 @@
+MD024: false # MD024/no-duplicate-heading: Multiple headings with the same content
 MD029: false # MD029/ol-prefix: Ordered list item prefix
 
