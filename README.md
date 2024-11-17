@@ -1,7 +1,8 @@
 # jgze
 
-A command-line tool for editing gzipped JSON files
-directly without manual decompression/compression steps.
+A lightweight CLI tool to edit .json.gz files seamlessly.
+Edit gzipped JSON files directly in your favorite editor
+with automatic formatting and compression handling.
 
 [crates.io/crates/jgze](https://crates.io/crates/jgze)
 
@@ -69,23 +70,19 @@ Suppose you edited this as follows:
 
 3. After saving: `{"name":"John","age":30}`
 
-## Installation
-
-Using cargo:
-
-```bash
-cargo install jgze
-```
-
-From source:
-
-```bash
-git clone https://github.com/teihenn/jgze
-cd jgze
-cargo install --path .
-```
-
 ## Usage
+
+```bash
+jgze [OPTIONS] <FILE>
+```
+
+| Option | Short | Description |
+|--------|-------|-------------|
+| --editor \<EDITOR\> | -e | Specify the editor to use (default: vim) |
+| --help | -h | Display help message |
+| --version | -v | Display version information |
+
+### Examples
 
 ```bash
 # Edit with default editor (vim)
@@ -93,7 +90,83 @@ jgze input.json.gz
 
 # Edit with a specific editor
 jgze -e nano input.json.gz
-jgze --editor nano input.json.gz
+
+# Show version information
+jgze -v
+
+# Show help message
+jgze -h
+```
+
+The usage can be verified using the test data in the testdata directory.
+
+## Installation
+
+### Using cargo
+
+#### install, update
+
+```bash
+cargo install jgze
+```
+
+#### uninstall
+
+```bash
+cargo uninstall jgze
+```
+
+### From GitHub releases
+
+#### install, update
+
+- Linux (x86_64)
+
+```bash
+tar xz -C /usr/local/bin < <(curl -L https://github.com/teihenn/jgze/releases/latest/download/jgze-x86_64-unknown-linux-gnu.tar.gz)
+```
+
+- macOS (x86_64)
+
+```bash
+tar xz -C /usr/local/bin < <(curl -L https://github.com/teihenn/jgze/releases/latest/download/jgze-x86_64-apple-darwin.tar.gz)
+```
+
+- macOS (aarch64)
+
+```bash
+tar xz -C /usr/local/bin < <(curl -L https://github.com/teihenn/jgze/releases/latest/download/jgze-aarch64-apple-darwin.tar.gz)
+```
+
+- Windows (x86_64)
+
+1. Download the latest release
+    - https://github.com/teihenn/jgze/releases/latest/download/jgze-x86_64-pc-windows-msvc.zip
+2. Extract the downloaded ZIP file
+3. Create a directory and place jgze.exe (e.g., `C:\Program Files\jgze`)
+4. Add the installation directory to the system PATH by running PowerShell as administrator
+
+#### uninstall
+
+```bash
+ls -l /usr/local/bin/jgze
+sudo rm /usr/local/bin/jgze
+```
+
+### From source
+
+#### install, update
+
+```bash
+git clone https://github.com/teihenn/jgze
+cd jgze
+cargo install --path .
+```
+
+#### uninstall
+
+```bash
+cargo uninstall jgze
 ```
 
 ## How it works
@@ -111,118 +184,3 @@ jgze --editor nano input.json.gz
      - For JSONL: Compresses each object to single line
      - For pretty-printed JSON: Preserves formatting
    - Compresses with gzip and saves back to the original file
-
-## Examples
-
-Using test files in the `testdata` directory:
-
-```bash
-# Edit a compact JSON file
-jgze testdata/test_compact.json.gz
-
-# Edit a pretty-formatted JSON file
-jgze testdata/test_pretty.json.gz
-```
-
-## Error Handling
-
-The tool includes error handling for common scenarios:
-
-- Invalid JSON syntax after editing
-- File access issues
-- Compression/decompression errors
-
-Error messages are descriptive and include the specific failure point.
-
-## For Developers
-
-### Release Process
-
-1. Update version in `Cargo.toml` on develop branch:
-
-```toml
-[package]
-name = "jgze"
-version = "1.1.0"  # Update this version(ex: 1.0.0 -> 1.1.0)
-```
-
-2. Update `CHANGELOG.md` on develop branch:
-
-- Move changes from "Unreleased" to "Released"
-- Add release date
-
-```markdown
-# Changelog
-
-## [Unreleased]
-
-## [Released]
-
-### [1.1.0] - 2024-11-26
-
-#### Feature
-- xxx
-
-### [1.0.0] - 2024-11-17
-```
-
-3. Update cargo.lock
-
-```bash
-cargo build
-```
-
-4. Commit and push changes to develop branch:
-
-```bash
-git add .
-git commit -m "Prepare for v1.1.0 release"
-git push origin develop
-```
-
-5. Merge develop branch into release branch:
-
-```bash
-git checkout release
-git merge --no-ff develop
-git push origin release
-```
-
-6. Create and push a new tag on release branch:
-
-```bash
-git tag v1.1.0
-git push origin v1.1.0
-```
-
-This will trigger the GitHub Actions workflow that:
-
-- Creates a new GitHub release
-- Builds binaries
-- Uploads the binaries to the release page
-
-#### Supported Platforms
-
-The automated builds create binaries for:
-
-| Platform | Architecture | Target Triple | File Name |
-|----------|-------------|---------------|-----------|
-| Linux | x86_64 | x86_64-unknown-linux-gnu | jgze-x86_64-linux.tar.gz |
-| macOS | x86_64 | x86_64-apple-darwin | jgze-x86_64-darwin.tar.gz |
-| macOS | aarch64 | aarch64-apple-darwin | jgze-aarch64-darwin.tar.gz |
-| Windows | x86_64 | x86_64-pc-windows-msvc | jgze-x86_64-windows.zip |
-
-7. Publish to crates.io:
-
-```bash
-cargo login
-cargo publish
-```
-
-8. Merge release branch into main branch:
-
-```bash
-git checkout main
-git merge --no-ff release
-git push origin main
-```
