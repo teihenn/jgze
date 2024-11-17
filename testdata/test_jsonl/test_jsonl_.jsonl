@@ -1,0 +1,3 @@
+{"name": "Alice", "age": 25, "city": "New York"}
+{"name": "Bob", "items": ["phone", "laptop"], "address": {"city": "Tokyo", "country": "Japan"}}
+{"name": "Charlie", "active": true, "score": 95.5}

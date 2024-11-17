@@ -1,19 +1,23 @@
 # Changelog
 
-[Unreleased]
+## [Unreleased]
 
-## [1.0.1]
+### [1.0.1]
 
-### Fix
+#### Feature
+
+- Support for JSONL format
+
+#### Fix
 
 - Keep the original order of json
 - Preserve compact format only if the original JSON is compact
 
-[Released]
+## [Released]
 
-## [1.0.0] - 2024-11-17
+### [1.0.0] - 2024-11-17
 
-### Feature
+#### Feature
 
 - Initial release
 - Basic functionality for editing .json.gz files
