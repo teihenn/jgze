@@ -13,6 +13,62 @@ directly without manual decompression/compression steps.
 - Validates JSON syntax after editing
 - Supports custom editor selection (defaults to vim)
 
+## Supported JSON Formats
+
+The tool supports three JSON formats:
+
+1. Compact JSON (single line)
+
+```json
+{"name":"John","age":30,"city":"Tokyo"}
+```
+
+2. Pretty-printed JSON
+
+```json
+{
+  "name": "John",
+  "age": 30,
+  "city": "Tokyo"
+}
+```
+
+3. JSON Lines (JSONL)
+
+```json
+{"name":"John","age":30}
+{"name":"Alice","age":25}
+{"name":"Bob","age":35}
+```
+
+For better readability, all formats are automatically converted to
+pretty-printed format when opened in the editor.
+After saving, the file is converted back to its original format before compression.
+
+For example, if you open a compact JSON file:
+
+1. Original: `{"name":"John","age":30,"city":"Tokyo"}`
+2. While editing:
+
+```json
+{
+"name": "John",
+"age": 30,
+"city": "Tokyo"
+}
+```
+
+Suppose you edited this as follows:
+
+```json
+{
+"name": "John",
+"age": 30
+}
+```
+
+3. After saving: `{"name":"John","age":30}`
+
 ## Installation
 
 Using cargo:
