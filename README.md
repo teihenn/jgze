@@ -99,12 +99,18 @@ jgze --editor nano input.json.gz
 ## How it works
 
 1. Decompresses the input `.json.gz` file
-2. If the JSON is in compact format, formats it for better readability
+2. Detects the JSON format and processes accordingly:
+   - Compact JSON: Formats for better readability
+   - JSONL: Formats each line individually
+   - Pretty-printed JSON: Keeps as is
 3. Opens the formatted JSON in the specified editor
 4. After editing and saving:
    - Validates the JSON syntax
-   - If the original was in compact format, converts back to compact
-   - Compresses and saves back to the original file
+   - Converts based on original format:
+     - For compact JSON: Compresses to single line
+     - For JSONL: Compresses each object to single line
+     - For pretty-printed JSON: Preserves formatting
+   - Compresses with gzip and saves back to the original file
 
 ## Examples
 
