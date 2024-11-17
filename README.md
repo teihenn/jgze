@@ -166,7 +166,13 @@ version = "1.1.0"  # Update this version(ex: 1.0.0 -> 1.1.0)
 ### [1.0.0] - 2024-11-17
 ```
 
-3. Commit and push changes to develop branch:
+3. Update cargo.lock
+
+```bash
+cargo build
+```
+
+4. Commit and push changes to develop branch:
 
 ```bash
 git add .
@@ -174,14 +180,15 @@ git commit -m "Prepare for v1.1.0 release"
 git push origin develop
 ```
 
-4. Merge develop branch into release branch:
+5. Merge develop branch into release branch:
 
 ```bash
 git checkout release
 git merge --no-ff develop
 git push origin release
+```
 
-5. Create and push a new tag on release branch:
+6. Create and push a new tag on release branch:
 
 ```bash
 git tag v1.1.0
@@ -205,14 +212,14 @@ The automated builds create binaries for:
 | macOS | aarch64 | aarch64-apple-darwin | jgze-aarch64-darwin.tar.gz |
 | Windows | x86_64 | x86_64-pc-windows-msvc | jgze-x86_64-windows.zip |
 
-6. Publish to crates.io:
+7. Publish to crates.io:
 
 ```bash
 cargo login
 cargo publish
 ```
 
-7. Merge release branch into main branch:
+8. Merge release branch into main branch:
 
 ```bash
 git checkout main
