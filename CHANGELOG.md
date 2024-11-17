@@ -7,6 +7,7 @@
 ### Fix
 
 - Keep the original order of json
+- Preserve compact format only if the original JSON is compact
 
 [Released]
 
