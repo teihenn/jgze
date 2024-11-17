@@ -10,8 +10,9 @@
 
 #### Fix
 
-- Keep the original order of json
-- Preserve compact format only if the original JSON is compact
+- JSON content order unintentionally changes after editing
+- Rewrite JSON in compact format even if the original is in pretty format
+- Differences occur even when a file is closed without changes
 
 ## [Released]
 

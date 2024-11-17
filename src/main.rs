@@ -121,6 +121,12 @@ fn main() -> Result<()> {
             .join("\n")
     } + "\n"; // Add final newline
 
+    // Skip overwriting if the JSON content hasn't changed
+    let original_json = json.clone();
+    if edited_json == original_json {
+        return Ok(());
+    }
+
     // Save result as .json.gz
     let output_file = File::create(&cli.file).context("Failed to create output file")?;
     let mut encoder = GzEncoder::new(output_file, Compression::default());
