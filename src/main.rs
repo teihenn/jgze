@@ -54,12 +54,21 @@ fn main() -> Result<()> {
     let edited_json: Value =
         serde_json::from_str(&edited_content).context("Invalid JSON after editing")?;
 
-    // If original JSON was compact, convert back to compact format
-    let original_was_compact = to_string(&json)?.len() == json.to_string().len();
-    let final_content = if original_was_compact {
-        to_string(&edited_json)?
-    } else {
+    // Read original content as string
+    let mut original_content = String::new();
+    let file = File::open(&cli.file).context("Failed to open input file")?;
+    let mut gz = GzDecoder::new(file);
+    gz.read_to_string(&mut original_content)
+        .context("Failed to read original content")?;
+
+    // Check if the original JSON was pretty-printed by looking for indentation
+    let was_pretty = original_content
+        .lines()
+        .any(|line| line.starts_with("  ") || line.starts_with("\t"));
+    let final_content = if was_pretty {
         to_string_pretty(&edited_json)?
+    } else {
+        to_string(&edited_json)?
     };
 
     // Save result as .json.gz
