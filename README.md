@@ -70,6 +70,36 @@ Suppose you edited this as follows:
 
 3. After saving: `{"name":"John","age":30}`
 
+## Usage
+
+```bash
+jgze [OPTIONS] <FILE>
+```
+
+| Option | Short | Description |
+|--------|-------|-------------|
+| --editor \<EDITOR\> | -e | Specify the editor to use (default: vim) |
+| --help | -h | Display help message |
+| --version | -v | Display version information |
+
+### Examples
+
+```bash
+# Edit with default editor (vim)
+jgze input.json.gz
+
+# Edit with a specific editor
+jgze -e nano input.json.gz
+
+# Show version information
+jgze -v
+
+# Show help message
+jgze -h
+```
+
+The usage can be verified using the test data in the testdata directory.
+
 ## Installation
 
 ### Using cargo
@@ -139,17 +169,6 @@ cargo install --path .
 cargo uninstall jgze
 ```
 
-## Usage
-
-```bash
-# Edit with default editor (vim)
-jgze input.json.gz
-
-# Edit with a specific editor
-jgze -e nano input.json.gz
-jgze --editor nano input.json.gz
-```
-
 ## How it works
 
 1. Decompresses the input `.json.gz` file
@@ -165,25 +184,3 @@ jgze --editor nano input.json.gz
      - For JSONL: Compresses each object to single line
      - For pretty-printed JSON: Preserves formatting
    - Compresses with gzip and saves back to the original file
-
-## Examples
-
-Using test files in the `testdata` directory:
-
-```bash
-# Edit a compact JSON file
-jgze testdata/test_compact.json.gz
-
-# Edit a pretty-formatted JSON file
-jgze testdata/test_pretty.json.gz
-```
-
-## Error Handling
-
-The tool includes error handling for common scenarios:
-
-- Invalid JSON syntax after editing
-- File access issues
-- Compression/decompression errors
-
-Error messages are descriptive and include the specific failure point.
