@@ -15,7 +15,7 @@ struct Cli {
     /// Input .json.gz file
     file: String,
 
-    /// Editor to use (defaults to vim)
+    /// Editor to use
     #[arg(short, long, default_value = "vim")]
     editor: String,
 }
