@@ -83,10 +83,19 @@ fn main() -> Result<()> {
             for line in edited_content.lines() {
                 let open_braces = line.matches('{').count();
                 let close_braces = line.matches('}').count();
+
+                // Calculate the net change in brace depth
+                // Positive means we're going deeper into nested objects
+                // Negative means we're closing nested objects
+                // Zero means we're at the same level
                 brace_count += open_braces as i32 - close_braces as i32;
 
+                // Add the current line to our JSON string buffer
+                // trim() removes whitespace from both ends of the line
                 current_json.push_str(line.trim());
 
+                // If brace_count is 0, we have a complete JSON object
+                // Also check if current_json is not empty to avoid empty objects
                 if brace_count == 0 && !current_json.is_empty() {
                     json_objects.push(current_json.clone());
                     current_json.clear();
