@@ -2,7 +2,7 @@
 
 [![Crates.io](https://img.shields.io/crates/v/jgze)](https://crates.io/crates/jgze)
 [![Downloads](https://img.shields.io/crates/d/jgze)](https://crates.io/crates/jgze)
-[![License](https://img.shields.io/crates/l/jgze)](https://github.com/teihenn/jgze/blob/main/LICENSE)
+[![License](https://img.shields.io/crates/l/jgze)](https://github.com/teihenn/jgze/blob/develop/LICENSE)
 
 A lightweight CLI tool to edit .json.gz files seamlessly.
 Edit gzipped JSON files directly in your favorite editor
